@@ -123,10 +123,10 @@ If you prefer different paths, edit the volumes: mappings in docker-compose.yml.
 
 From the repo root:
 
-# pull the published images
+pull the published images
 docker compose pull
 
-# start all services in the background
+start all services in the background
 docker compose up -d
 
 
@@ -140,16 +140,16 @@ qdrant on http://localhost:6333
 
 
 ### 4) Verify everything is healthy
-# Check containers & health status
+ Check containers & health status
 docker ps
 
-# Tail app logs
+ Tail app logs
 docker compose logs -f app
 
-# Qdrant alive?
+ Qdrant alive?
 curl http://localhost:6333/collections
 
-# PostgreSQL reachable?
+ PostgreSQL reachable?
 PGPASSWORD="$PG_PASSWORD" psql -h localhost -p 5433 -U "$PG_USER" -d "$PG_DB" -c '\l'
 
 
