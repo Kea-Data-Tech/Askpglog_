@@ -106,3 +106,51 @@ OPENAI_API_KEY=sk-******************************   # <-- REQUIRED for AI feature
 
 # Docker Hub (fixed for public image)
 DOCKERHUB_USERNAME=askpglog
+```
+
+### 2) (Optional) Adjust data persistence
+
+By default, the compose file persists data to these host paths:
+
+PostgreSQL → /var/lib/docker-volumes/postgres
+
+Qdrant → /var/lib/docker-volumes/qdrant
+
+If you prefer different paths, edit the volumes: mappings in docker-compose.yml.
+(Alternatively, switch to named volumes if you maintain your own compose variant.)
+
+### 3) Start the stack
+
+From the repo root:
+
+# pull the published images
+docker compose pull
+
+# start all services in the background
+docker compose up -d
+
+
+This brings up:
+
+app (Streamlit UI) on http://localhost:8501
+
+postgres on host port 5433 (container 5432)
+
+qdrant on http://localhost:6333
+
+
+### 4) Verify everything is healthy
+# Check containers & health status
+docker ps
+
+# Tail app logs
+docker compose logs -f app
+
+# Qdrant alive?
+curl http://localhost:6333/collections
+
+# PostgreSQL reachable?
+PGPASSWORD="$PG_PASSWORD" psql -h localhost -p 5433 -U "$PG_USER" -d "$PG_DB" -c '\l'
+
+
+Open the UI: http://localhost:8501
