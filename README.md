@@ -73,3 +73,36 @@
 - Quickly searching logs with natural language  
 - Generating summaries for incident reports  
 - Filtering noise and focusing on critical issues
+
+
+## Setup (Docker Compose)
+
+> **Prereqs**
+> - Docker & Docker Compose v2 installed
+> - Ports **8501** (app), **5433** (PostgreSQL on host), **6333** (Qdrant) are available
+> - This repository already includes `docker-compose.yml` and a `.env` template
+
+---
+
+### 1) Configure `.env`
+
+Fill in the sensitive values. **Do not commit real secrets**.
+
+```bash
+# PostgreSQL
+PG_HOST=postgres
+PG_USER=postgres
+PG_PASSWORD=change_me                   # <-- REQUIRED (non-empty)
+PG_DB=tsdb
+PG_PORT=5432
+
+# Qdrant
+QDRANT_HOST=qdrant
+QDRANT_PORT=6333
+QDRANT_URL=http://qdrant:6333
+
+# OpenAI (needed for AI summaries & fixes)
+OPENAI_API_KEY=sk-******************************   # <-- REQUIRED for AI features
+
+# Docker Hub (fixed for public image)
+DOCKERHUB_USERNAME=askpglog
