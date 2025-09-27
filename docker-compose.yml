@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  app:
+    image: docker.io/${DOCKERHUB_USERNAME}/askpglog-qdrant-dockerimage:latest
+    container_name: log-search-app
+    ports: ["8501:8501"]
+    env_file: [ .env ]
+    depends_on: [ postgres, qdrant ]
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    restart: always
+    env_file: [ .env ]
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DB}
+    ports: ["5433:5432"]
+    volumes:
+      - /var/lib/docker-volumes/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PG_USER}"]
+      interval: 10s
+      retries: 5
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant
+    restart: always
+    ports: ["6333:6333"]
+    volumes:
+      - /var/lib/docker-volumes/qdrant:/qdrant/storage
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:6333/collections || exit 1"]
+      interval: 10s
+      retries: 5
+
