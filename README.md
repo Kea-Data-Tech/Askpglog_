@@ -252,7 +252,7 @@ docker-compose.yml
 
 ## 1️⃣ Configure `.env`
 
-```env
+env
 # PostgreSQL
 PG_HOST=postgres
 PG_USER=postgres
