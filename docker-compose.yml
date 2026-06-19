@@ -1,39 +1,81 @@
-version: "3.9"
 services:
+
   app:
     image: docker.io/${DOCKERHUB_USERNAME}/askpglog-qdrant-dockerimage:latest
-    container_name: log-search-app
-    ports: ["8501:8501"]
-    env_file: [ .env ]
-    depends_on: [ postgres, qdrant ]
+    container_name: askpglog-app
     restart: unless-stopped
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+      - qdrant
+      - ollama
+    networks:
+      - backend
 
   postgres:
     image: postgres:15
-    container_name: postgres-db
+    container_name: askpglog-postgres
     restart: always
-    env_file: [ .env ]
+    env_file:
+      - .env
     environment:
       POSTGRES_USER: ${PG_USER}
       POSTGRES_PASSWORD: ${PG_PASSWORD}
       POSTGRES_DB: ${PG_DB}
-    ports: ["5433:5432"]
+    ports:
+      - "5433:5432"
     volumes:
-      - /var/lib/docker-volumes/postgres:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${PG_USER}"]
       interval: 10s
-      retries: 5
+      timeout: 5s
+      retries: 10
 
   qdrant:
     image: qdrant/qdrant:latest
-    container_name: qdrant
+    container_name: askpglog-qdrant
     restart: always
-    ports: ["6333:6333"]
+    ports:
+      - "6333:6333"
     volumes:
-      - /var/lib/docker-volumes/qdrant:/qdrant/storage
+      - qdrant_data:/qdrant/storage
+    networks:
+      - backend
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:6333/collections || exit 1"]
+      test: ["CMD-SHELL", "wget -qO- http://localhost:6333/collections >/dev/null || exit 1"]
       interval: 10s
-      retries: 5
+      timeout: 5s
+      retries: 10
 
+  ollama:
+    image: ollama/ollama:latest
+    container_name: askpglog-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - backend
+    entrypoint: >
+      sh -c "
+        ollama serve &
+        sleep 10
+        ollama list | grep -q nomic-embed-text || ollama pull nomic-embed-text
+        wait
+      "
+
+volumes:
+  postgres_data:
+  qdrant_data:
+  ollama_data:
+
+networks:
+  backend:
+    driver: bridge
