@@ -248,7 +248,8 @@ Make sure your repo contains:
 docker-compose.yml
 .env
 
-Here is the .env format
+## 1️⃣ Configure `.env`
+```env
 # PostgreSQL
 PG_HOST=postgres
 PG_USER=postgres
@@ -276,6 +277,7 @@ OG_PORT=
 
 # Docker Hub
 DOCKERHUB_USERNAME=askpglog
+```
 
 ---
 # After configuring .env
