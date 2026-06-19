@@ -283,14 +283,14 @@ DOCKERHUB_USERNAME=askpglog
 # After configuring .env
 
 ## 2️⃣ Start services
-docker compose pull
-docker compose up -d
+```docker compose pull```
+```docker compose up -d```
 
 ## 3️⃣ Check Running Containers
-docker ps
+```docker ps```
 
 ## 4️⃣ View Logs
-docker compose logs -f app
+```docker compose logs -f app```
 
 ## 🌐 Service URLs
 🚀 App → http://localhost:8501
@@ -299,22 +299,22 @@ docker compose logs -f app
 🧠 Ollama → http://localhost:11434
 
 ## 🧯 Maintenance Commands
-Stop system
-docker compose down
+## 🌐 Stop system 
+```docker compose down```
 
 ## 🌐 Remove volumes (reset all data)
-docker compose down -v
+```docker compose down -v```
 
 ## 🌐 Rebuild system
-docker compose build --no-cache
-docker compose up -d
+```docker compose build --no-cache```
+```docker compose up -d```
 
 ## 🌐 Remove volumes (reset all data)
-docker compose down -v
+```docker compose down -v
 
 ## 🌐 Rebuild system
-docker compose build --no-cache
-docker compose up -d
+```docker compose build --no-cache```
+```docker compose up -d```
 
 
 
