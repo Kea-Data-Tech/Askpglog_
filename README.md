@@ -310,7 +310,7 @@ DOCKERHUB_USERNAME=askpglog
 ```docker compose up -d```
 
 ## 🌐 Remove volumes (reset all data)
-```docker compose down -v
+```docker compose down -v```
 
 ## 🌐 Rebuild system
 ```docker compose build --no-cache```
