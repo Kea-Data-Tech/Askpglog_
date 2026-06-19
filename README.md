@@ -279,35 +279,38 @@ OG_HOST=
 OG_PORT=
 
 # Docker Hub
-DOCKERHUB_USERNAME=askpglog```
+DOCKERHUB_USERNAME=askpglog
 
--------------------------------------
-## After configuring `.env`
+---
 
-2️⃣ Start services
+
+
+# After configuring .env
+
+## 2️⃣ Start services
 docker compose pull
 docker compose up -d
 
-3️⃣ Check Running Containers
+## 3️⃣ Check Running Containers
 docker ps
 
-4️⃣ View Logs
+## 4️⃣ View Logs
 docker compose logs -f app
 
-🌐 Service URLs
+## 🌐 Service URLs
 🚀 App → http://localhost:8501
 🔎 Qdrant → http://localhost:6333/collections
 🐘 PostgreSQL → http://localhost:5433
 🧠 Ollama → http://localhost:11434
 
-🧯 Maintenance Commands
+## 🧯 Maintenance Commands
 Stop system
 docker compose down
 
-🌐 Remove volumes (reset all data)
+## 🌐 Remove volumes (reset all data)
 docker compose down -v
 
-🌐 Rebuild system
+## 🌐 Rebuild system
 docker compose build --no-cache
 docker compose up -d
 
