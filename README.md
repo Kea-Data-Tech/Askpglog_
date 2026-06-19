@@ -248,6 +248,34 @@ Make sure your repo contains:
 docker-compose.yml
 .env
 
+Here is the .env format
+# PostgreSQL
+PG_HOST=postgres
+PG_USER=postgres
+PG_PASSWORD=change_me
+PG_DB=tsdb
+PG_PORT=5432
+
+# Qdrant
+QDRANT_URL=http://qdrant:6333
+
+# Ollama
+OLLAMA_URL=http://ollama:11434
+
+# Optional external DB
+OG_DB=
+OG_USER=postgres
+OG_PASSWORD=
+OG_HOST=
+
+# Linux / Windows note:
+# Windows/Mac → host.docker.internal
+# Linux → 172.17.0.1
+
+OG_PORT=
+
+# Docker Hub
+DOCKERHUB_USERNAME=askpglog
 
 ---
 # After configuring .env
@@ -286,37 +314,7 @@ docker compose down -v
 docker compose build --no-cache
 docker compose up -d
 
-Here is the .env format:
-## 1️⃣ Configure `.env`
 
-```env
-# PostgreSQL
-PG_HOST=postgres
-PG_USER=postgres
-PG_PASSWORD=change_me
-PG_DB=tsdb
-PG_PORT=5432
-
-# Qdrant
-QDRANT_URL=http://qdrant:6333
-
-# Ollama
-OLLAMA_URL=http://ollama:11434
-
-# Optional external DB
-OG_DB=
-OG_USER=postgres
-OG_PASSWORD=
-OG_HOST=
-
-# Linux / Windows note:
-# Windows/Mac → host.docker.internal
-# Linux → 172.17.0.1
-
-OG_PORT=
-
-# Docker Hub
-DOCKERHUB_USERNAME=askpglog```
 
 
 
