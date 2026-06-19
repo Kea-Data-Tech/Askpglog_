@@ -281,6 +281,8 @@ OG_PORT=
 # Docker Hub
 DOCKERHUB_USERNAME=askpglog
 
+-------------------------------------
+
 2️⃣ Start services
 docker compose pull
 docker compose up -d
