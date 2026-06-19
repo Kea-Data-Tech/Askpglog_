@@ -282,6 +282,7 @@ OG_PORT=
 DOCKERHUB_USERNAME=askpglog```
 
 -------------------------------------
+## After configuring `.env`
 
 2️⃣ Start services
 docker compose pull
