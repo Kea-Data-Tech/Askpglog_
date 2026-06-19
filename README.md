@@ -1,156 +1,311 @@
-<!-- README.md -->
+# 🚀 AskPgLog
 
-<div align="center">
+**AskPgLog** is an advanced PostgreSQL log analysis and intelligence platform designed for **root cause detection, performance optimization, and AI-driven database insights**.
 
-# Askpglog
-
-**AI-powered PostgreSQL log analysis for fast root-cause detection**
-
-</div>
+It combines **semantic search (Qdrant)**, **LLM-based reasoning (OpenAI / Ollama)**, and **PostgreSQL analytics** to help engineers quickly debug issues, optimize queries, and understand database behavior at scale.
 
 ---
 
-## Overview
+# 🚀 Key Features
 
-**Askpglog** is a specialized tool for PostgreSQL log analysis with a focus on root cause detection. Using semantic search, AI-driven insights, and vector embeddings stored in the **Qdrant** Vector Store, it identifies errors, warnings, slow queries, deadlocks, and unusual patterns across multiple log files. By providing contextual events and concise AI-generated summaries, Askpglog helps database engineers and developers quickly pinpoint the underlying causes of issues and take effective corrective actions.
-
----
-
-## Qdrant Technology
-
-**Qdrant** is an open-source vector database for fast and scalable semantic search. It stores and indexes high-dimensional vector embeddings, supports real-time updates, filtering, and similarity search, and is ideal for AI-powered search and recommendations.
+## 📄 Log Upload & Ingestion
+- Supports `.log` and `.txt` PostgreSQL log files
+- Automatic parsing into structured events
+- Stores processed logs in **PostgreSQL**
+- Fully automated ingestion pipeline (no manual steps required)
 
 ---
 
-## Key Features
-
-### Log Upload & Ingestion
-- Supports `.csv`, `.log`, `.txt`, `.pdf`, `.docx` log files  
-- Automatically parses events and stores them in PostgreSQL
-
-### Semantic Log Search
-- Uses Qdrant vector embeddings for natural language queries  
-- Finds similar log lines even if keywords don’t match exactly
-
-### Adaptive Time Context
-- Search results include surrounding events within a ± time window  
-- Helps understand what happened before and after an error
-
-### Deadlock Detection
-- Detects deadlocks in logs  
-- Shows the last executed SQL statement per PID to debug issues
-
-### Severity Insights
-- Groups logs by severity: **ERROR**, **WARNING**, **FATAL**, **INFO**  
-- Quick filtering for high-priority issues
-
-### AI Summaries & Fixes
-- Summarizes root causes using LLMs (e.g., OpenAI API)  
-- Suggests possible fixes or next steps
-
-### Interactive UI
-- Built with **Streamlit**  
-- Upload logs, run queries, and visualize issues in a clean interface
+## 🔍 Semantic Log Search (AI + Qdrant)
+- Uses **Qdrant vector database**
+- Natural language search across logs
+- Finds similar patterns even without exact keywords
+- Context-aware retrieval (± time window expansion)
 
 ---
 
-## How It Works
+## 🧠 AI-Powered Log Analysis
+- Uses **LLMs (OpenAI / Ollama)**
+- Generates:
+  - Root cause analysis
+  - Incident summaries
+  - Suggested fixes
+- Converts raw logs into actionable engineering insights
 
-1. User uploads PostgreSQL log files via the Streamlit interface  
+---
+
+## 📊 Log Classification Engine
+- Automatically classifies logs into:
+  - ERROR
+  - WARNING
+  - FATAL
+  - INFO
+- Provides severity breakdown charts
+- Helps prioritize production issues
+
+---
+
+## 🔁 Repeated Log Detection
+- Detects duplicate / recurring logs
+- Identifies systemic failures
+- Helps detect noisy or looped errors
+
+---
+
+## ⚡ Slow Query Detection
+- Extracts slow queries from PostgreSQL logs
+- Requires query duration logging enabled
+- Identifies performance bottlenecks in production
+
+---
+
+## ⚡ Query Optimization Engine (EXPLAIN ANALYZE)
+- Runs PostgreSQL `EXPLAIN ANALYZE`
+- Detects:
+  - Sequential scans
+  - Missing indexes
+  - Expensive joins
+  - High-cost query plans
+- AI suggestions:
+  - Index recommendations
+  - Query rewrites
+  - Performance tuning strategies
+
+---
+
+## 🧬 PostgreSQL Schema Embedding
+- Extracts schema metadata:
+  - Tables
+  - Columns
+  - Constraints
+  - Indexes
+- Stores embeddings in **Qdrant**
+- Improves AI contextual understanding of database structure
+
+---
+
+## ⏱ Adaptive Time Context Engine
+- Retrieves logs with surrounding time context
+- Reconstructs full incident timelines
+- Helps trace root causes across events
+
+---
+
+## 🧯 Deadlock Detection
+- Detects PostgreSQL deadlocks
+- Maps last executed queries per PID
+- Helps debug transaction conflicts in production
+
+---
+
+## 📊 Severity Insights Dashboard
+- Visual breakdown of log severity levels
+- System health trends
+- Incident triage dashboard
+
+---
+
+## 💬 Chat-Based Log Exploration
+Ask questions like:
+- “Why did this query fail?”
+- “Show errors in last 10 minutes”
+- “What caused the spike at 2 AM?”
+
+AI responds with contextual explanations using logs + embeddings.
+
+---
+
+## 🕘 HISTORY TAB (IMPORTANT)
+The **History Tab** stores all AI interactions:
+
+### 📌 Features:
+- Stores every AI-generated response
+- Tracks user queries and system answers
+- Maintains chronological analysis history
+- Helps in:
+  - Incident audits
+  - Debugging past issues
+  - Reviewing AI recommendations
+  - Knowledge retention for teams
+
+### 📌 Benefits:
+- Prevents repeated debugging effort
+- Provides traceability for production incidents
+- Acts as an internal knowledge base
+- Useful for DevOps / DBA audits
+
+---
+
+# ⚙️ How It Works
+
+1. Upload PostgreSQL log files via Streamlit UI  
 2. Logs are parsed and stored in PostgreSQL  
-3. Embeddings are generated and stored in Qdrant  
-4. User enters a query or pastes a log message  
-5. System retrieves matching logs + related context  
-6. AI summarizes potential causes and fixes
+3. Embeddings generated using **sentence-transformers / Ollama**  
+4. Stored in **Qdrant vector database**  
+5. User queries processed using semantic + keyword search  
+6. AI generates explanations, fixes, and insights  
+7. All interactions stored in **History Tab**
 
 ---
 
-## Typical Use Cases
+# 🚀 App Workflow
 
-- Root cause analysis of PostgreSQL errors and incidents  
-- Debugging deadlocks in production systems  
-- Investigating performance slowdowns  
-- Quickly searching logs with natural language  
-- Generating summaries for incident reports  
-- Filtering noise and focusing on critical issues
-
-
-## Setup (Docker Compose)
-
-> **Prereqs**
-> - Docker & Docker Compose v2 installed
-> - Ports **8501** (app), **5433** (PostgreSQL on host), **6333** (Qdrant) are available
-> - This repository already includes `docker-compose.yml` and a `.env` template
+## 1️⃣ Backend Setup
+- Configure PostgreSQL connection
+- Ensure **Qdrant + Ollama** are running
+- Verify environment variables
 
 ---
 
-### 1) Configure `.env`
+## 2️⃣ Log Upload
+- Upload `.log` or `.txt` files
+- Automatic ingestion pipeline starts
+- No manual processing required
 
-Fill in the sensitive values. **Do not commit real secrets**.
+---
 
-```bash
+## 3️⃣ Qdrant Validation
+- Run smoke test for vector DB
+- Ensure embeddings are stored correctly
+
+---
+
+## 4️⃣ Schema Embedding (Optional)
+- Click **Embed PostgreSQL Schema**
+- Enhances AI understanding of database structure
+
+---
+
+## 5️⃣ Analysis Features
+
+### 🚀 Log Classification
+- Categorizes logs into severity levels
+
+### 🚀 Repeated Logs
+- Detects duplicate patterns
+
+### 🚀 AI Analysis
+- Root cause + fixes generation
+
+### 🚀 Slow Queries
+- Identifies performance issues
+
+### 🚀 Query Optimization
+- Uses `EXPLAIN ANALYZE`
+- Suggests performance improvements
+
+---
+
+## 6️⃣ Qdrant Management Tab
+- Reset log collections
+- Reset schema embeddings
+- Reset cache collections (cost optimization)
+
+---
+
+## 7️⃣ PostgreSQL Reset (Optional)
+- Clear analysis tables
+- Reset system for fresh analysis
+
+---
+
+# 🧠 Core Technologies
+
+- Streamlit (UI)
+- PostgreSQL (logs + storage)
+- Qdrant (vector database)
+- Ollama (local LLM + embeddings)
+- OpenAI API (AI reasoning)
+- Docker (deployment)
+- EXPLAIN ANALYZE (query tuning)
+
+---
+
+# 🚀 Use Cases
+
+- PostgreSQL incident debugging
+- Query performance optimization
+- Production log monitoring
+- Root cause analysis
+- AI-powered DevOps assistant
+- Performance tuning recommendations
+
+---
+
+# ⚠️ Prerequisites
+
+- Docker installed
+- Docker Compose v2
+- PostgreSQL running in container
+- OpenAI API key (optional but recommended)
+
+---
+
+# 📦 Deployment (Docker Compose)
+
+## 📁 Project Structure Requirement
+Make sure your repo contains:
+docker-compose.yml
+.env
+
+---
+
+## 1️⃣ Configure `.env`
+
+```env
 # PostgreSQL
 PG_HOST=postgres
 PG_USER=postgres
-PG_PASSWORD=change_me                   # <-- REQUIRED (non-empty)
+PG_PASSWORD=change_me
 PG_DB=tsdb
 PG_PORT=5432
 
 # Qdrant
-QDRANT_HOST=qdrant
-QDRANT_PORT=6333
 QDRANT_URL=http://qdrant:6333
 
-# OpenAI (needed for AI summaries & fixes)
-OPENAI_API_KEY=sk-******************************   # <-- REQUIRED for AI features
+# Ollama
+OLLAMA_URL=http://ollama:11434
 
-# Docker Hub (fixed for public image)
+# Optional external DB
+OG_DB=
+OG_USER=postgres
+OG_PASSWORD=
+OG_HOST=
+
+# Linux / Windows note:
+# Windows/Mac → host.docker.internal
+# Linux → 172.17.0.1
+
+OG_PORT=
+
+# Docker Hub
 DOCKERHUB_USERNAME=askpglog
-```
 
-### 2) (Optional) Adjust data persistence
-
-By default, the compose file persists data to these host paths:
-
-PostgreSQL → /var/lib/docker-volumes/postgres
-
-Qdrant → /var/lib/docker-volumes/qdrant
-
-If you prefer different paths, edit the volumes: mappings in docker-compose.yml.
-(Alternatively, switch to named volumes if you maintain your own compose variant.)
-
-### 3) Start the stack
-
-From the repo root:
-
-pull the published images
+2️⃣ Start services
 docker compose pull
+docker compose up -d
 
-start all services in the background
+3️⃣ Check Running Containers
+docker ps
+
+4️⃣ View Logs
+docker compose logs -f app
+
+🌐 Service URLs
+🚀 App → http://localhost:8501
+🔎 Qdrant → http://localhost:6333/collections
+🐘 PostgreSQL → http://localhost:5433
+🧠 Ollama → http://localhost:11434
+
+🧯 Maintenance Commands
+Stop system
+docker compose down
+
+🌐 Remove volumes (reset all data)
+docker compose down -v
+
+🌐 Rebuild system
+docker compose build --no-cache
 docker compose up -d
 
 
-This brings up:
-
-app (Streamlit UI) on http://localhost:8501
-
-postgres on host port 5433 (container 5432)
-
-qdrant on http://localhost:6333
-
-
-### 4) Verify everything is healthy
- Check containers & health status
-docker ps
-
- Tail app logs
-docker compose logs -f app
-
- Qdrant alive?
-curl http://localhost:6333/collections
-
- PostgreSQL reachable?
-PGPASSWORD="$PG_PASSWORD" psql -h localhost -p 5433 -U "$PG_USER" -d "$PG_DB" -c '\l'
-
-
-Open the UI: http://localhost:8501
